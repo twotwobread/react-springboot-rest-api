@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <h1>옷 주문/관리 애플리케이션</h1>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/product_list.css}">
+</head>
+
+<body class="container-fluid">
+<script crossorigin="anonymous" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<div class="row-vw d-flex" style="margin-bottom: 20px">
+    <div class="item d-grid gap-2 col-5 mx-auto">
+        <a class="btn btn-primary btn-lg" th:href="@{/main/member/new}" type="button">Member 등록하기</a>
+    </div>
+</div>
+<div class="row-vw d-flex" style="margin-bottom: 20px">
+    <form method="post" style="margin-right: 25px" th:action="@{/main/orders}">
+        <div class="mb-3">
+            <label class="form-label" for="memberId">Member 주문내역 조회하기</label>
+            <select class="form-select" id=memberId name="memberId">
+                <option selected>Open this select member</option>
+                <option th:each="member:${members}" th:text="|${member.name} / ${member.id}|"
+                        th:value="${member.id}"></option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">조회하기</button>
+    </form>
+    <form method="post" th:action="@{/main}">
+        <div class="mb-3">
+            <label class="form-label" for="brandId">브랜드별</label>
+            <select class="form-select" id=brandId name="brandId">
+                <option selected value="">Open this select brand</option>
+                <option th:each="brand:${brands}" th:text="|${brand.name} / ${brand.id}|"
+                        th:value="${brand.id}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="category">카테고리별</label>
+            <select class="form-select" id=category name="category">
+                <option selected value="">Open this select category</option>
+                <option value="셔츠">셔츠</option>
+                <option value="청바지">청바지</option>
+                <option value="스니커즈">스니커즈</option>
+                <option value="백팩">백팩</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" id="submit_filter" type="submit">조회하기</button>
+    </form>
+</div>
+<div id="gallery">
+    <div class="card" th:each="product:${products}" th:object="${product}">
+        <div class="thumbnail"
+             th:onclick="'location.href=\''+ @{/main/product/{productId}(productId=${product.id})} + '\''">
+            <img alt="썸네일 이미지" th:src="@{/BLANK.png}">
+        </div>
+
+        <h3 class="product" th:text="*{name}">없음</h3> <!-- 상품명 -->
+        <footer class="footer">
+            <div class="product_info">
+                <span>가격 : </span>
+                <span class="price" th:text="*{price}">가격</span>
+            </div>
+            <div class="product_info">
+                <span>카테고리 : </span>
+                <span class="category" th:text="*{category.getTitle()}">카테고리</span>
+            </div>
+            <div class="info">
+                <span>게시일시 : </span>
+                <span class="createdAt" th:text="*{createdAt.toLocalDate()}">시간</span>
+            </div>
+        </footer>
+    </div>
+</div>
+</body>
+</html>
