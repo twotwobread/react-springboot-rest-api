@@ -1,0 +1,149 @@
+:root {
+    --line: 3;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#gallery {
+    display: grid;
+    /* 컬럼을 1fr 로 해서 3분할 해서 가져가게 했어요. */
+    grid-template-columns: 1fr 1fr 1fr;
+
+    /*
+      최대 너비를 카드 1장의 크기 * 3 해서 3장을 만들고
+      카드 사이 간격을 주는 gap 의 크기 만큼 더해줬어요.
+    */
+    max-width: calc((320px * 3) + 16px + 16px);
+    gap: 16px;
+
+    /*
+      블록 레벨 요소는 너비가 정해져있으면
+      margin-left / margin-right : auto
+      를 줘서 중앙정렬 시킬 수 있어요.
+    */
+    margin: 0 auto;
+}
+
+.card {
+    max-width: 320px;
+    width: 100%;
+    box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px;
+    overflow: hidden;
+
+    /*
+      트랜지션에 all 을 주지 않고 transform 만 준 이유는
+      성능 최적화를 위해서입니다~
+    */
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.thumbnail {
+    height: 167px;
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+
+    /*
+      object-fit / object-position을 사용하면
+      background-size: cover / background-position: center;
+      와 동일한 효과를 가져요
+    */
+    object-fit: cover;
+    object-position: center;
+}
+
+.title {
+    margin: 10px 0 0;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.description {
+    margin: 10px 0 0;
+    font-size: 14px;
+
+    /*
+      줄과 높이를 일정하게 맞추기 위해서 같은 값을 주고
+      :root에 선언된 숫자 3을 가져왔어요.
+    */
+    line-height: 21px;
+    height: calc(21px * var(--line));
+    overflow: hidden;
+
+    /*
+      여러줄 말줄임 처리를 할 수 있고
+      line-clamp에 들어간 숫자에 브라우저가 알아서 말줄임표를 붙여줘요.
+      표준 속성이 아니기 때문에 vendor prefix가 붙어있습니다!
+    */
+    display: -webkit-box;
+    -webkit-line-clamp: var(--line);
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.footer {
+    /* 플랙스박스로 만들고 가로축을 세로축으로 바꿔서 여백을 줬어요. */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer .info {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.footer .info time {
+}
+
+.footer .info span {
+}
+
+.footer .user {
+    display: flex;
+    align-items: center;
+}
+
+.footer .user .small-thumbnail {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.footer .user .name {
+    margin-left: 10px;
+}
+
+.footer .user .like {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    /*
+      부모가 플랙스박스라면,
+      자식요소는 margin-right: 0; left: auto를 줘서
+      왼쪽으로는 자동으로 떨어지고 오른쪽은 0으로 붙어라
+      라고 하는걸로 블록을 오른쪽으로 붙일 수 있어요.
+    */
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.footer .user .like svg {
+    width: 12px;
+}
+
+.footer .user .like i {
+    /* i 태그는 시각적인 기울림이 있는데, normal로 하면 일반 글자처럼 세울 수 있어요. */
+    font-style: normal;
+}
