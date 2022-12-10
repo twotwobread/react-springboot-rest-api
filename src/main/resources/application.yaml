@@ -1,0 +1,16 @@
+server:
+  port: 30000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/young_cm
+    username: root
+    password: 1234
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  devtools:
+    livereload:
+      enabled: true
