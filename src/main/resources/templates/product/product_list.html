@@ -1,0 +1,25 @@
+<html>
+<div id="gallery">
+    <div class="card" th:each="product:${products}" th:object="${product}">
+        <div class="thumbnail" th:onclick="'location.href=\''+ @{/product/{productId}(productId=${product.id})} + '\''">
+            <img alt="썸네일 이미지" th:src="@{/BLANK.png}">
+        </div>
+
+        <h3 class="product" th:text="*{name}">없음</h3> <!-- 상품명 -->
+        <footer class="footer">
+            <div class="product_info">
+                <span>가격 : </span>
+                <span class="price" th:text="*{price}">가격</span>
+            </div>
+            <div class="product_info">
+                <span>카테고리 : </span>
+                <span class="category" th:text="*{category.getTitle()}">카테고리</span>
+            </div>
+            <div class="info">
+                <span>게시일시 : </span>
+                <span class="createdAt" th:text="*{createdAt.toLocalDate()}">시간</span>
+            </div>
+        </footer>
+    </div>
+</div>
+</html>
